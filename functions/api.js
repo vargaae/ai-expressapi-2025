@@ -117,7 +117,7 @@ router.get('/news', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(`https://newsapi.org/v2/everything?q=${query}&apiKey=${NEWS_API_KEY}&from=2025-02-06`);
+    const response = await axios.get(`https://newsapi.org/v2/everything?q=${query}&apiKey=${NEWS_API_KEY}&from=2025-03-01`);
     res.json(response.data);
   } catch (error) {
     res.status(error.response.status).json(error.response.data);
