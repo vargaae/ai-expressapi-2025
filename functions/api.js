@@ -113,7 +113,12 @@ router.post("/predict", async (req, res) => {
 // Endpoint to fetch news using News API
 router.get("/news", async (req, res) => {
   const query = req.query.query || "chatgpt";
-  const dateFrom = "2025-02-27" || new Date().toISOString().split("T")[0];
+  const dateFrom = new Date();
+  dateFrom.setDate(dateFrom.getDate() - 1); // set the date to yesterday
+  // const dateFrom = new Date().toISOString().split("T")[0] || "2025-04-03";
+  const formattedDate = dateFrom.toISOString().split("T")[0];
+
+  console.log(formattedDate);
 
   if (!NEWS_API_KEY) {
     return res.status(500).json({ message: "News API key is missing." });
@@ -121,7 +126,7 @@ router.get("/news", async (req, res) => {
 
   try {
     const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=${query}&apiKey=${NEWS_API_KEY}&from=${dateFrom}`
+      `https://newsapi.org/v2/everything?q=${query}&apiKey=${NEWS_API_KEY}&from=${formattedDate}`
     );
     res.json(response.data);
   } catch (error) {
